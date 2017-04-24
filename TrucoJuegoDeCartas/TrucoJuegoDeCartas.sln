@@ -5,6 +5,8 @@ VisualStudioVersion = 15.0.26228.4
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TrucoJuegoDeCartas.Entidades", "TrucoJuegoDeCartas.Entidades\TrucoJuegoDeCartas.Entidades.csproj", "{659AF477-8B00-49C0-AF28-3956C19005AD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TrucoJuegoDeCartas.Tests", "TrucoJuegoDeCartas.Tests\TrucoJuegoDeCartas.Tests.csproj", "{0477ABAE-0741-41B8-BA4E-92F2DA7D688C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{659AF477-8B00-49C0-AF28-3956C19005AD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{659AF477-8B00-49C0-AF28-3956C19005AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{659AF477-8B00-49C0-AF28-3956C19005AD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0477ABAE-0741-41B8-BA4E-92F2DA7D688C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0477ABAE-0741-41B8-BA4E-92F2DA7D688C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0477ABAE-0741-41B8-BA4E-92F2DA7D688C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0477ABAE-0741-41B8-BA4E-92F2DA7D688C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

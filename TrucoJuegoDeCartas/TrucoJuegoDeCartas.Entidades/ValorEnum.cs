@@ -6,7 +6,17 @@ using System.Threading.Tasks;
 
 namespace TrucoJuegoDeCartas.Entidades
 {
-    public class Class1
+    public enum ValorEnum
     {
+        Uno,
+        Dos,
+        Tres,
+        Cuatro,
+        Cinco,
+        Seis,
+        Siete,
+        Sota,
+        Caballo,
+        Rey
     }
 }
