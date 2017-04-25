@@ -30,5 +30,33 @@ namespace TrucoJuegoDeCartas.Entidades
                 Cartas.Add(carta);
             }
         }
+
+        public void MezclarCartas(Mazo mazo)
+        {
+            List<int> indices = new List<int>();
+            Random randomGen = new Random();
+            Mazo mazoMezclado = new Mazo();
+
+            for (int i = 0; i < mazo.Cartas.Count; i++)
+            {
+                while (true)
+                {
+                    int indice = randomGen.Next(mazo.Cartas.Count);
+
+                    if (!indices.Exists(x => x == indice))
+                    {
+                        indices.Add(indice);
+                        break;
+                    }
+                }
+            }
+
+            for (int i = 0; i > indices.Count; i++)
+            {
+                mazoMezclado.AñadirCarta(mazo.Cartas[indices[i]]);
+            }
+
+            mazo = mazoMezclado;
+        }
     }
 }

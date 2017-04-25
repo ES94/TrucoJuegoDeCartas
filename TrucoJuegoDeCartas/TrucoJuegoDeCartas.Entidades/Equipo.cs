@@ -15,12 +15,15 @@ namespace TrucoJuegoDeCartas.Entidades
 
         public int Tantos { get; set; }
 
-        public List<Jugador> Integrantes { get; set; }
+        public List<Jugador> Integrantes { get; }
 
         public void AñadirJugador(string nombre)
         {
+            int id = 0;
+
             // Calcular id
-            //this.Integrantes.Add(new Jugador(nombre));
+
+            this.Integrantes.Add(new Jugador(id, nombre));
         }
     }
 }

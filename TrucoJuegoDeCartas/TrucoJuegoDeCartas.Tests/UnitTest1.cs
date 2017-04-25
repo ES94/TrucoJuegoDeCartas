@@ -43,7 +43,7 @@ namespace TrucoJuegoDeCartas.Tests
                 }
             }
 
-            jugador.MezclarCartas(mazo);
+            //jugador.MezclarCartas(mazo);
             
             // Assert
             Assert.AreEqual(mazo.Cartas, mazo.Cartas);
@@ -83,7 +83,7 @@ namespace TrucoJuegoDeCartas.Tests
                 }
             }
 
-            j2.RepartirCartas(mazo, new List<Equipo>() { equipo1, equipo2 });
+            //j2.RepartirCartas(mazo, new List<Equipo>() { equipo1, equipo2 });
 
             // Assert
             Assert.AreEqual(3, j0.CartasEnLaMano.Count);
