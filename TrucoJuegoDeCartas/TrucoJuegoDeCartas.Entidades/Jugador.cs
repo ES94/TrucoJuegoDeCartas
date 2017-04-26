@@ -25,12 +25,22 @@ namespace TrucoJuegoDeCartas.Entidades
 
         public void JugarCarta()
         {
-
+            /*
+             * 1º) Seleccionar carta.
+             * 2º) Devolver carta a Partida.
+             * 3º) Quitar carta de la lista de cartas del jugador. (VER)
+             */
         }
 
         public void IrseAlMazo()
         {
-
+            /*
+             * 1º) Localizar al compañero.
+             * 2º) Enviar solicitud de retiro.
+             * 3º) Esperar confirmación o negación de la solicitud.
+             * 4º) Realizar cambios en caso afirmativo.
+             * 5º) De realizarse los cambios, notificar a Partida el fin de la ronda.
+             */
         }
     }
 }

@@ -8,10 +8,16 @@ namespace TrucoJuegoDeCartas.Entidades
 {
     public class Carta
     {
+        public Carta()
+        {
+            this.Valor = ValorEnum.Cuatro;
+            this.Palo = PaloEnum.Copa;
+        }
+
         public Carta(ValorEnum valor, PaloEnum palo)
         {
-            Valor = valor;
-            Palo = palo;
+            this.Valor = valor;
+            this.Palo = palo;
         }
 
         public ValorEnum Valor { get; }

@@ -11,85 +11,84 @@ namespace TrucoJuegoDeCartas.Tests
         [TestMethod]
         public void ComprobarCantidadDeCartas()
         {
-            // Arange
             Mazo mazo = new Mazo();
             
-            // Act
-            foreach (PaloEnum palo in Enum.GetValues(typeof(PaloEnum)))
-            {
-                foreach (ValorEnum valor in Enum.GetValues(typeof(ValorEnum)))
-                {
-                    mazo.AñadirCarta(valor, palo);
-                }
-            }
-
-            // Assert
             Assert.AreEqual(40, mazo.Cartas.Count);
         }
 
         [TestMethod]
         public void ComprobarMazoMezclado()
         {
-            // Arange
             Mazo mazo = new Mazo();
-            Jugador jugador = new Jugador(0, "Juan");
+            Mazo mazoReferencia = new Mazo();
 
-            // Act
-            foreach (PaloEnum palo in Enum.GetValues(typeof(PaloEnum)))
-            {
-                foreach (ValorEnum valor in Enum.GetValues(typeof(ValorEnum)))
-                {
-                    mazo.AñadirCarta(valor, palo);
-                }
-            }
-
-            //jugador.MezclarCartas(mazo);
+            mazo.MezclarCartas();
             
-            // Assert
-            Assert.AreEqual(mazo.Cartas, mazo.Cartas);
+            Assert.AreNotEqual(mazoReferencia.Cartas, mazo.Cartas);
             Assert.AreEqual(40, mazo.Cartas.Count);
         }
 
         [TestMethod]
         public void ComprobarRepartirCartas()
         {
-            // Arange
-            Mazo mazo = new Mazo();
+            Partida p1 = new Partida();
+
+            Mazo m1 = p1.Mazo;
+
+            Equipo e1 = new Equipo();
+            Equipo e2 = new Equipo();
 
             Jugador j0 = new Jugador(0, "j0");
-
             Jugador j1 = new Jugador(1, "j1");
-
             Jugador j2 = new Jugador(2, "j2");
-
             Jugador j3 = new Jugador(3, "j3");
 
-            Equipo equipo1 = new Equipo();
+            e1.Integrantes.Add(j0);
+            e1.Integrantes.Add(j2);
 
-            Equipo equipo2 = new Equipo();
+            e2.Integrantes.Add(j1);
+            e2.Integrantes.Add(j3);
 
-            // Act
-            equipo1.Integrantes.Add(j0);
-            equipo1.Integrantes.Add(j2);
+            p1.AñadirEquipo(e1);
+            p1.AñadirEquipo(e2);
+            p1.Mazo.MezclarCartas();
 
-            equipo2.Integrantes.Add(j1);
-            equipo2.Integrantes.Add(j3);
+            Assert.AreEqual(40, p1.Mazo.Cartas.Count);
+            Assert.AreNotEqual(m1.Cartas.GetRange(0, 40), p1.Mazo.Cartas.GetRange(0, 40));
 
-            foreach (PaloEnum palo in Enum.GetValues(typeof(PaloEnum)))
-            {
-                foreach (ValorEnum valor in Enum.GetValues(typeof(ValorEnum)))
-                {
-                    mazo.AñadirCarta(valor, palo);
-                }
-            }
+            p1.RepartirCartas();
+            
+            Assert.AreEqual(3, p1.Equipos[0].Integrantes[0].CartasEnLaMano.Count);
+            Assert.AreEqual(3, p1.Equipos[0].Integrantes[1].CartasEnLaMano.Count);
+            Assert.AreEqual(3, p1.Equipos[1].Integrantes[0].CartasEnLaMano.Count);
+            Assert.AreEqual(3, p1.Equipos[1].Integrantes[1].CartasEnLaMano.Count);
+            Assert.AreEqual(28, p1.Mazo.Cartas.Count);
 
-            //j2.RepartirCartas(mazo, new List<Equipo>() { equipo1, equipo2 });
+            p1.JuntarCartas();
 
-            // Assert
-            Assert.AreEqual(3, j0.CartasEnLaMano.Count);
-            Assert.AreEqual(3, j1.CartasEnLaMano.Count);
-            Assert.AreEqual(3, j2.CartasEnLaMano.Count);
-            Assert.AreEqual(3, j3.CartasEnLaMano.Count);
+            Assert.AreEqual(0, p1.Equipos[0].Integrantes[0].CartasEnLaMano.Count);
+            Assert.AreEqual(0, p1.Equipos[0].Integrantes[1].CartasEnLaMano.Count);
+            Assert.AreEqual(0, p1.Equipos[1].Integrantes[0].CartasEnLaMano.Count);
+            Assert.AreEqual(0, p1.Equipos[1].Integrantes[1].CartasEnLaMano.Count);
+            Assert.AreEqual(40, p1.Mazo.Cartas.Count);
+        }
+
+        [TestMethod]
+        public void CompararCartas()
+        {
+            Carta c0 = new Carta(ValorEnum.Uno, PaloEnum.Espada);
+            Carta c1 = new Carta(ValorEnum.Uno, PaloEnum.Basto);
+            Carta c2 = new Carta(ValorEnum.Uno, PaloEnum.Oro);
+            Carta c3 = new Carta(ValorEnum.Uno, PaloEnum.Copa);
+
+            Mesa m = new Mesa();
+
+            m.CartasEnJuego.Add(c0);
+            m.CartasEnJuego.Add(c1);
+            m.CartasEnJuego.Add(c2);
+            m.CartasEnJuego.Add(c3);
+
+            Assert.AreEqual(c0, m.CompararCartas());
         }
     }
 }

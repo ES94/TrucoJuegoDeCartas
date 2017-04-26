@@ -11,6 +11,14 @@ namespace TrucoJuegoDeCartas.Entidades
         public Mazo()
         {
             this.Cartas = new List<Carta>(40);
+
+            foreach (PaloEnum palo in Enum.GetValues(typeof(PaloEnum)))
+            {
+                foreach (ValorEnum valor in Enum.GetValues(typeof(ValorEnum)))
+                {
+                    this.AñadirCarta(valor, palo);
+                }
+            }
         }
 
         public List<Carta> Cartas { get; }
@@ -31,17 +39,19 @@ namespace TrucoJuegoDeCartas.Entidades
             }
         }
 
-        public void MezclarCartas(Mazo mazo)
+        public void MezclarCartas()
         {
             List<int> indices = new List<int>();
+
             Random randomGen = new Random();
+
             Mazo mazoMezclado = new Mazo();
 
-            for (int i = 0; i < mazo.Cartas.Count; i++)
+            for (int i = 0; i < this.Cartas.Count; i++)
             {
                 while (true)
                 {
-                    int indice = randomGen.Next(mazo.Cartas.Count);
+                    int indice = randomGen.Next(this.Cartas.Count);
 
                     if (!indices.Exists(x => x == indice))
                     {
@@ -51,12 +61,19 @@ namespace TrucoJuegoDeCartas.Entidades
                 }
             }
 
-            for (int i = 0; i > indices.Count; i++)
+            mazoMezclado.Cartas.Clear();
+
+            for (int i = 0; i < indices.Count; i++)
             {
-                mazoMezclado.AñadirCarta(mazo.Cartas[indices[i]]);
+                mazoMezclado.AñadirCarta(this.Cartas[indices[i]]);
             }
 
-            mazo = mazoMezclado;
+            this.Cartas.Clear();
+
+            foreach (Carta carta in mazoMezclado.Cartas)
+            {
+                this.AñadirCarta(carta);
+            }
         }
     }
 }
