@@ -8,12 +8,12 @@ namespace TrucoJuegoDeCartas.Web.Hubs
 {
     public class ChatHub : Hub
     {
-        public void EnviarMensaje(string nombre, string mensaje)
+        public void EnviarMensajeGlobal(string nombre, string mensaje)
         {
             Clients.All.mostrarMensaje(nombre, mensaje);
         }
 
-        public void EnviarMensajeSoloAMi(string nombre, string mensaje)
+        public void EnviarMensajeEquipo(string nombre, string mensaje)
         {
             Clients.Caller.mostrarMensaje(nombre, mensaje);
         }

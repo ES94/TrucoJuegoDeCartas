@@ -9,7 +9,7 @@ namespace TrucoJuegoDeCartas.Tests
     public class UnitTest1
     {
         [TestMethod]
-        public void ComprobarCantidadDeCartas()
+        public void CartasEnMazo()
         {
             Mazo mazo = new Mazo();
             
@@ -17,64 +17,19 @@ namespace TrucoJuegoDeCartas.Tests
         }
 
         [TestMethod]
-        public void ComprobarMazoMezclado()
+        public void MezclarMazo()
         {
             Mazo mazo = new Mazo();
             Mazo mazoReferencia = new Mazo();
 
             mazo.MezclarCartas();
             
-            Assert.AreNotEqual(mazoReferencia.Cartas, mazo.Cartas);
+            Assert.AreNotEqual(mazoReferencia.Cartas.GetRange(0, 40), mazo.Cartas.GetRange(0, 40));
             Assert.AreEqual(40, mazo.Cartas.Count);
         }
-
+        
         [TestMethod]
-        public void ComprobarRepartirCartas()
-        {
-            Partida p1 = new Partida();
-
-            Mazo m1 = p1.Mazo;
-
-            Equipo e1 = new Equipo();
-            Equipo e2 = new Equipo();
-
-            Jugador j0 = new Jugador(0, "j0");
-            Jugador j1 = new Jugador(1, "j1");
-            Jugador j2 = new Jugador(2, "j2");
-            Jugador j3 = new Jugador(3, "j3");
-
-            e1.Integrantes.Add(j0);
-            e1.Integrantes.Add(j2);
-
-            e2.Integrantes.Add(j1);
-            e2.Integrantes.Add(j3);
-
-            p1.AñadirEquipo(e1);
-            p1.AñadirEquipo(e2);
-            p1.Mazo.MezclarCartas();
-
-            Assert.AreEqual(40, p1.Mazo.Cartas.Count);
-            Assert.AreNotEqual(m1.Cartas.GetRange(0, 40), p1.Mazo.Cartas.GetRange(0, 40));
-
-            p1.RepartirCartas();
-            
-            Assert.AreEqual(3, p1.Equipos[0].Integrantes[0].CartasEnLaMano.Count);
-            Assert.AreEqual(3, p1.Equipos[0].Integrantes[1].CartasEnLaMano.Count);
-            Assert.AreEqual(3, p1.Equipos[1].Integrantes[0].CartasEnLaMano.Count);
-            Assert.AreEqual(3, p1.Equipos[1].Integrantes[1].CartasEnLaMano.Count);
-            Assert.AreEqual(28, p1.Mazo.Cartas.Count);
-
-            p1.JuntarCartas();
-
-            Assert.AreEqual(0, p1.Equipos[0].Integrantes[0].CartasEnLaMano.Count);
-            Assert.AreEqual(0, p1.Equipos[0].Integrantes[1].CartasEnLaMano.Count);
-            Assert.AreEqual(0, p1.Equipos[1].Integrantes[0].CartasEnLaMano.Count);
-            Assert.AreEqual(0, p1.Equipos[1].Integrantes[1].CartasEnLaMano.Count);
-            Assert.AreEqual(40, p1.Mazo.Cartas.Count);
-        }
-
-        [TestMethod]
-        public void CompararCartas()
+        public void ComprobarCompararCartas()
         {
             Carta c0 = new Carta(ValorEnum.Uno, PaloEnum.Espada);
             Carta c1 = new Carta(ValorEnum.Uno, PaloEnum.Basto);
@@ -89,6 +44,36 @@ namespace TrucoJuegoDeCartas.Tests
             m.CartasEnJuego.Add(c3);
 
             Assert.AreEqual(c0, m.CompararCartas());
+        }
+
+        [TestMethod]
+        public void RepartirCartas()
+        {
+            Partida partida = new Partida();
+
+            Mazo mazoOriginal = partida.Mazo;
+
+            partida.AñadirEquipo();
+            partida.AñadirEquipo();
+
+            partida.AñadirJugador("Juan");
+            partida.AñadirJugador("Juan");
+            partida.AñadirJugador("Juan");
+            partida.AñadirJugador("Juan");
+
+            partida.Equipos[0].Integrantes[0].TieneLaMano = true;
+
+            partida.Mazo.MezclarCartas();
+
+            Mazo mazoMezclado = partida.Mazo;
+
+            partida.RepartirCartas();
+
+            Assert.AreEqual(3, partida.Equipos[0].Integrantes[0].CartasEnLaMano.Count);
+            Assert.AreEqual(3, partida.Equipos[0].Integrantes[1].CartasEnLaMano.Count);
+            Assert.AreEqual(3, partida.Equipos[1].Integrantes[0].CartasEnLaMano.Count);
+            Assert.AreEqual(3, partida.Equipos[1].Integrantes[1].CartasEnLaMano.Count);
+            Assert.AreEqual(28, partida.Mazo.Cartas.Count);
         }
     }
 }

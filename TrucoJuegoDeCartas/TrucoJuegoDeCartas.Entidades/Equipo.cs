@@ -8,21 +8,20 @@ namespace TrucoJuegoDeCartas.Entidades
 {
     public class Equipo
     {
-        public Equipo()
+        public Equipo(string nombre)
         {
+            this.Nombre = nombre;
             this.Integrantes = new List<Jugador>(2);
         }
+
+        public string Nombre { get; }
 
         public int Tantos { get; set; }
 
         public List<Jugador> Integrantes { get; }
 
-        public void AñadirJugador(string nombre)
+        public void AñadirJugador(int id, string nombre)
         {
-            int id = 0;
-
-            // Calcular id
-
             this.Integrantes.Add(new Jugador(id, nombre));
         }
     }

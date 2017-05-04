@@ -13,10 +13,10 @@
 </head>
 <body>
     <div class="container">
-        <input type="text" id="message" />
         <input type="text" id="displayname" />
-        <input type="button" id="sendmessageonlyme" value="Send me">
-        <input type="button" id="sendmessage" value="Send" />
+        <input type="text" id="message" />
+        <input type="button" id="sendmessageteam" value="Enviar a equipo">
+        <input type="button" id="sendmessageglobal" value="Enviar a todos" />
         <ul id="discussion"></ul>
     </div>
     <!--Script references. -->
@@ -44,16 +44,16 @@
             $('#displayname').focus();
             // Start the connection.
             $.connection.hub.start().done(function () {
-                $('#sendmessage').click(function () {
+                $('#sendmessageglobal').click(function () {
                     // Call the Send method on the hub.
-                    chat.server.enviarMensaje($('#displayname').val(), $('#message').val());
+                    chat.server.enviarMensajeGlobal($('#displayname').val(), $('#message').val());
                     // Clear text box and reset focus for next comment.
                     $('#message').val('').focus();
                 });
 
-                $('#sendmessageonlyme').click(function () {
+                $('#sendmessageteam').click(function () {
                     // Call the Send method on the hub.
-                    chat.server.enviarMensajeSoloAMi($('#displayname').val(), $('#message').val());
+                    chat.server.enviarMensajeEquipo($('#displayname').val(), $('#message').val());
                     // Clear text box and reset focus for next comment.
                     $('#message').val('').focus();
                 });

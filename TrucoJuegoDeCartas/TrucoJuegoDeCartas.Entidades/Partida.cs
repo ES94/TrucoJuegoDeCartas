@@ -21,9 +21,45 @@ namespace TrucoJuegoDeCartas.Entidades
 
         public Mesa Mesa { get; set; }
 
-        public void AñadirEquipo(Equipo equipo)
+        /// <summary>
+        /// Crea un nuevo equipo y le asigna un nombre automáticamente.
+        /// </summary>
+        public void AñadirEquipo()
         {
-            this.Equipos.Add(equipo);
+            if (this.Equipos.Count != this.Equipos.Capacity)
+            {
+                string nombre = "Equipo " + (this.Equipos.Count == 0 ? "1" : "2");
+
+                this.Equipos.Add(new Equipo(nombre));
+            }
+        }
+
+        /// <summary>
+        /// Crea un nuevo jugador y lo posiciona automáticamente en un grupo incompleto.
+        /// </summary>
+        /// <param name="nombre">Nombre del jugador.</param>
+        public void AñadirJugador(string nombre)
+        {
+            int id = -1;
+
+            foreach (Equipo equipo in this.Equipos)
+            {
+                if (equipo.Integrantes.Count < 2)
+                {
+                    if (equipo.Nombre == "Equipo 1")
+                    {
+                        id = (equipo.Integrantes.Count == 0 ? 0 : 2);
+                    }
+                    else
+                    {
+                        id = (equipo.Integrantes.Count == 0 ? 1 : 3);
+                    }
+
+                    equipo.AñadirJugador(id, nombre);
+
+                    break;
+                }
+            }
         }
 
         /// <summary>
@@ -31,9 +67,12 @@ namespace TrucoJuegoDeCartas.Entidades
         /// </summary>
         public void RepartirCartas()
         {
-            int indiceEquipo = this.Equipos.FindIndex(e => e.Integrantes.Exists(Jugador => Jugador.TieneLaMano == true));
-            int indiceJugador = this.Equipos[indiceEquipo].Integrantes.FindIndex(j => j.TieneLaMano == true);
+            int indiceEquipo = this.Equipos.FindIndex(equipo => equipo.Integrantes.Exists(jugador => jugador.TieneLaMano == true));
+            int indiceJugador = this.Equipos[indiceEquipo].Integrantes.FindIndex(jugador => jugador.TieneLaMano == true);
             int indice = this.Equipos[indiceEquipo].Integrantes[indiceJugador].ID;
+            
+            indiceEquipo = this.Equipos.FindIndex(equipo => equipo.Integrantes.Exists(jugador => jugador.ID == (indice - 1 < 0 ? 3 : indice - 1)));
+            indiceJugador = this.Equipos[indiceEquipo].Integrantes.FindIndex(jugador => jugador.ID == (indice - 1 < 0 ? 3 : indice - 1));
 
             while (this.Equipos[indiceEquipo].Integrantes[indiceJugador].CartasEnLaMano.Count < 3)
             {
